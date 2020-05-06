@@ -1,4 +1,6 @@
 import random
+from Computer import Computer
+from Hand import Hand
 
 
 class ClueGame:
@@ -9,11 +11,13 @@ class ClueGame:
                  "Billiard Room", "Lounge", "Hall", "Study", "Library"]
     secret = []
     player_hand = None
-    computer_hand = None
+    computer = None
+    availabile_cards = None
 
     def __init__(self):
         self.player_hand = Hand()
-        self.computer_hand = Hand()
+        self.computer = Computer()
+        self.availabile_cards = self.people + self.weapons + self.locations
         pass
 
     def initialize(self):
@@ -25,45 +29,26 @@ class ClueGame:
         self.secret.append(self.weapons[wrand])
         self.secret.append(self.locations[lrand])
 
-        self.people.pop(prand)
-        self.weapons.pop(wrand)
-        self.locations.pop(lrand)
+        self.availabile_cards.remove(self.people[prand])
+        self.availabile_cards.remove(self.weapons[wrand])
+        self.availabile_cards.remove(self.locations[lrand])
 
     def reveal_secret(self):
         print("Time to figure out who done it!")
         print("It was %s with the %s in the %s" %
               (self.secret[0], self.secret[1], self.secret[2]))
 
-
     def deal(self):
-        all_cards = self.people + self.weapons + self.locations
-        random.shuffle(all_cards)
+        random.shuffle(self.availabile_cards)
         tempp = []
         tempc = []
-        for i in range(0, len(all_cards), 2):
-            tempp.append(all_cards[i])
+        for i in range(0, len(self.availabile_cards), 2):
+            tempp.append(self.availabile_cards[i])
         self.player_hand.set_hand(tempp)
-        for i in range(1, len(all_cards), 2):
-            tempc.append(all_cards[i])
-        self.computer_hand.set_hand(tempc)
-
+        for i in range(1, len(self.availabile_cards), 2):
+            tempc.append(self.availabile_cards[i])
+        self.computer.hand.set_hand(tempc)
 
     def show_player_cards(self):
         print("Player's cards:")
         self.player_hand.print_hand()
-
-
-class Hand:
-    cards = []
-
-    def __init__(self):
-        pass
-
-
-    def set_hand(self, hand):
-        self.cards = hand
-
-
-    def print_hand(self):
-        for card in self.cards:
-            print("  " + card)
