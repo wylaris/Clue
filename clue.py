@@ -55,7 +55,7 @@ def take_guess(game):
     revealed = game.computer.reveal_random_card(
         person, weapon, location)  # Checks if the computer has a card
     if revealed is not None:
-        print("The computer revealed %s" % revealed)
+        print("**The computer revealed %s**" % revealed)
     else:
         print("The computer did not have any of those cards...")
         reveal = input("Do you want to check (Yes, No)? ")
@@ -76,12 +76,12 @@ def player_reveal(game, person, weapon, location):
     while True:
         card = input(
             "What card do you want to show the computer? Press enter if you do not have a card to reveal. ").strip()
-        if card in game.player_hand.cards:
+        if card in game.player_hand.cards and (card == person or card == weapon or card == location):
             return card
         elif card == "":
             return None
         else:
-            print("You do not have that card")
+            print("You do not have that card or it is not one they asked for")
 
 
 def main():
