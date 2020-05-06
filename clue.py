@@ -3,7 +3,6 @@ import sys
 
 def play_clue(game):
     game.deal()
-    game.reveal_secret()
     game.show_player_cards()
     while True:
         take_guess(game)
