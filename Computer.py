@@ -29,6 +29,7 @@ class Computer:
         elif card in self.possible_locations:
             self.possible_locations.remove(card)
 
+
     def guess(self):
         person = self.possible_people[random.randint(
             0, len(self.possible_people) - 1)]

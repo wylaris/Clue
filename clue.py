@@ -1,14 +1,29 @@
 from Game import ClueGame
 import sys
 
+
 def play_clue(game):
+    computer_playing = True
     game.deal()
     game.show_player_cards()
     while True:
         take_guess(game)
         person, weapon, location = game.computer.guess()
-        print("\nThe computer guessed it was %s with the %s in the %s" % (person, weapon, location))
-        game.computer.remove_from_possible(player_reveal(game, person, weapon, location))
+        print("\nThe computer guessed it was %s with the %s in the %s" %
+              (person, weapon, location))
+        player_card = player_reveal(game, person, weapon, location)
+        if player_card is not None:
+            game.computer.remove_from_possible(player_card)
+        else:
+            computer_playing = computer_check(game, person, weapon, location)
+
+
+def computer_check(game, person, weapon, location):
+    if game.reveal_secret() == (person, weapon, location):
+        sys.exit("Sorry, the computer won but at least we caught the killer!")
+    else:
+        print("The computer was not correct...")
+        return False
 
 
 def take_guess(game):
@@ -44,9 +59,12 @@ def take_guess(game):
 
 def player_reveal(game, person, weapon, location):
     while True:
-        card = input("What card do you want to show the computer? ").strip()
+        card = input(
+            "What card do you want to show the computer? Press enter if you do not have a card to reveal. ").strip()
         if card in game.player_hand.cards:
             return card
+        elif card == "":
+            return None
         else:
             print("You do not have that card")
 

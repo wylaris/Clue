@@ -5,7 +5,7 @@ from Hand import Hand
 
 class ClueGame:
     people = ["Miss Scarlett", "Mr. Green", "Colonel Mustard",
-              "Professor Plum", "Mrs. Peakcock", "Dr. Orchid"]
+              "Professor Plum", "Mrs. Peacock", "Dr. Orchid"]
     weapons = ["Dagger", "Lead Pipe", "Revolver", "Rope", "Wrench"]
     locations = ["Kitchen", "Ballroom", "Conservatory", "Dinning Room",
                  "Billiard Room", "Lounge", "Hall", "Study", "Library"]
