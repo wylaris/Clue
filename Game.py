@@ -16,9 +16,7 @@ class ClueGame:
 
     def __init__(self):
         self.player_hand = Hand()
-        self.computer = Computer()
         self.availabile_cards = self.people + self.weapons + self.locations
-        pass
 
     def initialize(self):
         prand = random.randint(0, len(self.people) - 1)
@@ -32,6 +30,7 @@ class ClueGame:
         self.availabile_cards.remove(self.people[prand])
         self.availabile_cards.remove(self.weapons[wrand])
         self.availabile_cards.remove(self.locations[lrand])
+        self.computer = Computer(self.people, self.weapons, self.locations)
 
     def reveal_secret(self):
         print("Time to figure out who done it!")
@@ -48,6 +47,7 @@ class ClueGame:
         for i in range(1, len(self.availabile_cards), 2):
             tempc.append(self.availabile_cards[i])
         self.computer.hand.set_hand(tempc)
+        self.computer.add_hand_to_known()
 
     def show_player_cards(self):
         print("Player's cards:")
