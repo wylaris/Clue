@@ -36,6 +36,7 @@ class ClueGame:
         print("Time to figure out who done it!")
         print("It was %s with the %s in the %s" %
               (self.secret[0], self.secret[1], self.secret[2]))
+        return (self.secret[0], self.secret[1], self.secret[2])
 
     def deal(self):
         random.shuffle(self.availabile_cards)
