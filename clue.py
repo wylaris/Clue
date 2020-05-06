@@ -3,6 +3,7 @@ import sys
 
 def play_clue(game):
     game.deal()
+    game.reveal_secret()
     game.show_player_cards()
     while True:
         take_guess(game)
@@ -12,20 +13,20 @@ def play_clue(game):
 
 
 def take_guess(game):
-    person = input("Who do you think it was? ")
-    if person not in game.people:
+    person = input("\nWho do you think it was? ").strip()
+    while person not in game.people:
         print("Person not found")
-        person = input("Who do you think it was? ")
+        person = input("Who do you think it was? ").strip()
 
-    weapon = input("What do you think they used? ")
-    if weapon not in game.weapons:
+    weapon = input("What do you think they used? ").strip()
+    while weapon not in game.weapons:
         print("Weapon not found")
-        weapon = input("What do you think they used? ")
+        weapon = input("What do you think they used? ").strip()
 
-    location = input("Where do you think they did it? ")
-    if location not in game.locations:
+    location = input("Where do you think they did it? ").strip()
+    while location not in game.locations:
         print("Location not found")
-        location = input("Where do you think they did it? ")
+        location = input("Where do you think they did it? ").strip()
 
     revealed = game.computer.reveal_random_card(person, weapon, location)
     if revealed is not None:
@@ -34,7 +35,7 @@ def take_guess(game):
         print("The computer did not have any of those cards...")
         reveal = input("Do you want to check (Yes, No)? ")
         if reveal == "Yes":
-            if game.reveal_secret == (person, weapon, location):
+            if game.reveal_secret() == (person, weapon, location):
                 sys.exit("Congradulations!  You won!")
             else:
                 sys.exit("Oh no!  The killer got away...")
@@ -44,7 +45,7 @@ def take_guess(game):
 
 def player_reveal(game, person, weapon, location):
     while True:
-        card = input("What card do you want to show the computer? ")
+        card = input("What card do you want to show the computer? ").strip()
         if card in game.player_hand.cards:
             return card
         else:
@@ -52,9 +53,14 @@ def player_reveal(game, person, weapon, location):
 
 
 def main():
-    game = ClueGame()
-    game.initialize()
-    play_clue(game)
+    try:
+        game = ClueGame()
+        game.initialize()
+        play_clue(game)
+    except KeyboardInterrupt:
+        sys.exit("\n")
+    except Exception as e:
+        print("Error: " + str(e))
 
 
 if __name__ == '__main__':

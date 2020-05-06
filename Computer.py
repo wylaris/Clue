@@ -9,9 +9,9 @@ class Computer:
     possible_locations = []
 
     def __init__(self, people, weapons, locations):
-        self.possible_people = people
-        self.possible_weapons = weapons
-        self.possible_locations = locations
+        self.possible_people = people.copy()
+        self.possible_weapons = weapons.copy()
+        self.possible_locations = locations.copy()
 
     def show_hand(self):
         print("Computer's cards:")
@@ -46,7 +46,7 @@ class Computer:
             can_reval.append(weapon)
         if location in self.hand.cards:
             can_reval.append(location)
-            
+
         if len(can_reval) == 1:
             return can_reval[0]
         elif len(can_reval) > 1:
